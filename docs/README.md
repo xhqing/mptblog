@@ -1,4 +1,4 @@
-# It's My Personal Technical Blog (mptlog)
+# It's My Personal Technical Blog (mptblog)
 
-## mptlog Repo Address
-https://github.com/xhqing/mptlog
+## mptblog Repo Address
+https://github.com/xhqing/mptblog
