@@ -4,6 +4,18 @@ import shutil
 class TitleError(Exception):
     """TitleError class"""
 
+def gen_list():
+    post_mdfiles = os.listdir("docs/post")
+    for string in post_mdfiles:
+        if string[-3:] != ".md":
+            post_mdfiles.remove(string)
+
+    with open("docs/README.md", "a") as f:
+        f.write("\n")
+        f.write(" - 目录\n")
+        for mdf in post_mdfiles:
+            f.write(f"   - [{mdf[:-3]}](post/{mdf})\n")
+
 def gen_sidebar():
     post_mdfiles = os.listdir("docs/post")
     for string in post_mdfiles:
@@ -89,6 +101,7 @@ if __name__ == "__main__":
                 f.write(line)
 
     gen_sidebar()
+    gen_list()
     modify_tr_operator()
     first_line_add_br()
 
