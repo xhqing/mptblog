@@ -1,7 +1,5 @@
 # It's My Personal Technical Blog (mptblog)
-
  - Repo Address: https://github.com/xhqing/mptblog
-
  - 目录
    - [深入理解Logistic_Loss与回归树--未完成](post/深入理解Logistic_Loss与回归树--未完成.md)
    - [关于机器学习中的降维](post/关于机器学习中的降维.md)

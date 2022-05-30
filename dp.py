@@ -4,14 +4,15 @@ import shutil
 class TitleError(Exception):
     """TitleError class"""
 
-def gen_list():
+def gen_readme():
     post_mdfiles = os.listdir("docs/post")
     for string in post_mdfiles:
         if string[-3:] != ".md":
             post_mdfiles.remove(string)
 
-    with open("docs/README.md", "a") as f:
-        f.write("\n")
+    with open("docs/README.md", "w") as f:
+        f.write("# It's My Personal Technical Blog (mptblog)\n")
+        f.write(" - Repo Address: https://github.com/xhqing/mptblog\n")
         f.write(" - 目录\n")
         for mdf in post_mdfiles:
             f.write(f"   - [{mdf[:-3]}](post/{mdf})\n")
@@ -101,7 +102,7 @@ if __name__ == "__main__":
                 f.write(line)
 
     gen_sidebar()
-    gen_list()
+    gen_readme()
     modify_tr_operator()
     first_line_add_br()
 
