@@ -43,8 +43,8 @@ $$
 用二进制交叉熵作为loss function，正例标记为$1$，反例标记为$0$，则
 $$
 \begin{aligned}
-L\left(y_i,f(\boldsymbol x_i)\right) &= -[y_ilog(f(\vec x_i))+(1-y_i)log(1-f(\vec x_i))] \\
-                   &= -[y_ilog(\frac{1}{1+e^{-\vec\beta \vec x_i}})+(1-y_i)log(1-\frac{1}{1+e^{-\vec\beta \vec x_i}})] \\
+L\left(y_i,f(\boldsymbol x_i)\right) &= -[y_i\log_2(f(\boldsymbol x_i))+(1-y_i)\log_2(1-f(\boldsymbol x_i))] \\
+                   &= -[y_i\log_2(\frac{1}{1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}})+(1-y_i)log(1-\frac{1}{1+e^{-\vec\beta \vec x_i}})] \\
                    &= y_ilog(1+e^{-\vec\beta \vec x_i})-(1-y_i)log\frac{e^{-\vec\beta \vec x_i}}{1+e^{-\vec\beta \vec x_i}}\\
                    &= y_ilog(1+e^{-\vec\beta \vec x_i})-(1-y_i)log\frac{1}{1+e^{\vec\beta \vec x_i}} \\
                    &= y_ilog(1+e^{-\vec\beta \vec x_i})+(1-y_i)log(1+e^{\vec\beta \vec x_i})
