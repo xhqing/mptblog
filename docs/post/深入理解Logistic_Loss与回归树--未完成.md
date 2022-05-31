@@ -28,7 +28,7 @@ P(g=\pm1|\boldsymbol\beta,\boldsymbol x) = \frac{1}{1+e^{-g\boldsymbol\beta^{\ma
 $$
 其中$g=1$代表正例，$g=-1$代表反例。
 
-## 二进制交叉熵与Logistic Loss
+## Binary Entropy Loss与Logistic Loss
 
 假设$f$是hypothesis function，而$L$是loss function，训练有监督学习器的时候实际上都是如下的优化问题：
 $$
@@ -43,50 +43,50 @@ $$
 用二进制交叉熵作为loss function，正例标记为$1$，反例标记为$0$，则
 $$
 \begin{aligned}
-L\left(y_i,f(\boldsymbol x_i)\right) &= -[y_i\log_2(f(\boldsymbol x_i))+(1-y_i)\log_2(1-f(\boldsymbol x_i))] \\
-                   &= -[y_i\log_2(\frac{1}{1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}})+(1-y_i)log(1-\frac{1}{1+e^{-\vec\beta \vec x_i}})] \\
-                   &= y_ilog(1+e^{-\vec\beta \vec x_i})-(1-y_i)log\frac{e^{-\vec\beta \vec x_i}}{1+e^{-\vec\beta \vec x_i}}\\
-                   &= y_ilog(1+e^{-\vec\beta \vec x_i})-(1-y_i)log\frac{1}{1+e^{\vec\beta \vec x_i}} \\
-                   &= y_ilog(1+e^{-\vec\beta \vec x_i})+(1-y_i)log(1+e^{\vec\beta \vec x_i})
+L\left(y_i,f\left(\boldsymbol x_i\right)\right) &= -[y_i\log_2\left(f\left(\boldsymbol x_i\right)\right)+\left(1-y_i\right)\log_2\left(1-f\left(\boldsymbol x_i\right)\right)] \\
+                   &= -[y_i\log_2\left(\frac{1}{1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}}\right)+\left(1-y_i\right)\log_2\left(1-\frac{1}{1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}}\right)] \\
+                   &= y_i\log_2\left(1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}\right) - \left(1-y_i\right)\log_2\frac{e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}}{1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}}\\
+                   &= y_i\log_2\left(1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}\right) - \left(1-y_i\right)\log_2\frac{1}{1+e^{\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}} \\
+                   &= y_i\log_2\left(1+e^{-\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}\right) + \left(1-y_i\right)\log_2\left(1+e^{\boldsymbol\beta^{\mathrm T} \boldsymbol x_i}\right)
 \end{aligned}
 \tag{8}
 $$
 
-假设$$h$$是另外一个hypothesis function，且$$h=\vec\beta \vec x$$，把$$h$$带入$$(8)$$式可以得到
+假设$h$是另外一个hypothesis function，且$h=\boldsymbol\beta^{\mathrm T} \boldsymbol x$，把$h$带入$(8)$式可以得到
 $$
-L(y_i,h(\vec x_i)) = y_ilog(1+e^{-h(\vec x_i)}) + (1-y_i)log(1+e^{h(\vec x_i)}) \tag{9}
+L\left(y_i, h\left(\boldsymbol x_i\right)\right) = y_i\log_2\left(1+e^{-h\left(\boldsymbol x_i\right)}\right) + \left(1-y_i\right)\log_2\left(1+e^{h\left(\boldsymbol x_i\right)}\right) \tag{9}
 $$
-显然$$(8)$$式和$$(9)$$式是等价的，即
+显然$(8)$式和$(9)$式是等价的，即
 $$
-L(y_i,f(\vec x_i)) = L(y_i,h(\vec x_i)) \tag{10}
+L\left(y_i, f\left(\boldsymbol x_i\right)\right) = L\left(y_i, h\left(\boldsymbol x_i\right)\right) \tag{10}
 $$
-$$(9)$$式的Loss形式叫作针对$$h$$的Logistic Loss，也就是说针对$$f$$的二进制交叉熵损失等价于针对$$h$$的Logistic损失，而$$f$$实际上是$$h$$通过Logistic function的映射，即
+$(9)$式的Loss形式叫作针对$h$的Logistic Loss，也就是说针对$f$的Binary Entropy Loss等价于针对$h$的Logistic Loss，而$f$实际上是$h$通过Logistic Function的映射，即
 $$
-f(\vec x) = \frac{1}{1+e^{-h(\vec x)}} \tag{11}
+f\left(\boldsymbol x\right) = \frac{1}{1+e^{-h\left(\boldsymbol x\right)}} \tag{11}
 $$
-也就是说不论$$h$$这个hypothesis function是什么形式，针对$$h$$使用Logistic Loss就可以用于二分类问题，因为针对$$h$$使用Logistic Loss就等价于针对$$f$$使用二进制交叉熵损失。
+也就是说不论$h$这个hypothesis function是什么形式，针对$h$使用Logistic Loss就可以用于二分类问题，因为针对$h$使用Logistic Loss就等价于针对$f$使用Binary Entropy Loss。
 
-如果是用于二分类的深层神经网络，这里的$$f$$则可以看成是神经网络的最后一个Sigmoid输出神经元，如果$$\vec x$$仍然看作是原始输入样本的话，则$$h$$可以看成是从输入层到最后一个隐层整体构成的复合函数。
+如果是用于二分类的深层前馈神经网络，这里的$f$则可以看成是神经网络的最后一个Sigmoid输出神经元，如果$\boldsymbol x$仍然看作是原始输入样本的话，则$h$可以看成是从输入层到最后一个隐层整体构成的复合函数。
 
 著名的梯度提升机(GBM, Gradient Boosting Machine)实际上可以对任何学习器进行Boosting操作，Boosting是一种集成学习方法，已经证明任何弱学习器都有提升为强学习器的潜能，因此Boosting通常指把弱学习器提升为强学习器的提升方法。另外，这里的Gradient是指Gradient Descent，不是中文字面意思的“梯度值提升”，“提升”是指Boosting这种集成学习范式。
 
-GBM最常见的是GBDT(Gradient Boosting Decision Tree)，因为GBDT实际上用的是基于CART中的回归树的加性模型，所以GBDT也常叫作GBRT(Gradient Boosting Regression Tree)，也就是说GBDT中的弱学习器是经典的Breiman的CART中的Regression Tree，我们知道GBDT既可以用于回归也可以用于分类，那么回归树是如何用于分类的呢？
+GBM最常见的是GBDT(Gradient Boosting Decision Tree)，由于GBDT实际上用的是基于CART中的回归树的加性模型，所以GBDT也常叫作GBRT(Gradient Boosting Regression Tree)，也就是说GBDT中的弱学习器是经典的Breiman的CART中的Regression Tree，我们知道GBDT既可以用于回归也可以用于分类，那么回归树是如何用于分类的呢？
 
-这里说明二分类的情况，多分类情况暂不赘述。由$$(11)$$式知道如果$$h$$就是回归树的hypothesis function，也就是说$$h$$就是回归树的叶子结点的输出，那么通过Logistic function映射成$$f$$后再对$$f$$使用二进制交叉熵损失就可以做二分类任务了，由$$(9)(10)$$式知道也就是说直接对回归树$$h$$使用Logistic Loss就可以做二分类任务了。
+这里说明二分类的情况，多分类情况暂不赘述。由$(11)$式知道如果$h$就是回归树的hypothesis function，也就是说$h$就是回归树的叶子结点的输出，那么通过Logistic Function映射成$f$后再对$f$使用Binary Entropy Loss就可以做二分类任务了，由$(9)(10)$式可知直接对回归树$h$使用Logistic Loss就可以做二分类任务了。
 
-## CART回归树的回归与分类数学原理
+## CART回归树的回归与分类原理
 
-CART(Classification and Regression Tree)是最早由Breiman等人提出的一类决策树算法，其中Classification Tree使用基尼系数作为分裂准则，在此暂不赘述分类树细节，Regression Tree采用启发式算法寻找最优分裂节点，这里推导一下Loss function分别采用Squared Loss和Logistic Loss的回归和分类的数学原理。
+CART(Classification and Regression Tree)是最早由Breiman等人提出的一类决策树算法，其中Classification Tree使用基尼系数作为分裂准则，本文暂不赘述分类树细节，Regression Tree采用启发式算法寻找最优分裂节点，这里推导一下Loss Function分别采用Squared Loss和Logistic Loss的回归和分类的数学原理。
 
 ### 采用Squared Loss的回归树回归
 
 关于CART回归树的原理推导可以参考李航的《统计学习方法》，我这里试图用更通俗易懂，更详细严谨的方式进行解读和推导。
 
-首先假设hypothesis function为$$f$$，也即回归树为$$f$$，样本向量为$$\vec x$$，$$y\in R$$是样本$$\vec x$$的真实target值，则回归树$$f$$的回归预测公式为
+首先假设回归树的hypothesis function为$f$，样本向量为$\boldsymbol x$，$y\in \R$是样本$\boldsymbol x$的真实target值，则回归树$f$的回归预测公式为
 $$
-\hat y_i = f(\vec x_i) \tag{12}
+\hat y_i = f\left(\boldsymbol x_i\right) \tag{12}
 $$
-其中$$i$$为样本编号，$$\hat y_i$$为回归树第$$i$$个样本的估计值。
+其中$i$为样本编号，$\hat y_i$为回归树第$i$个样本的预测值。
 
 Squared Loss形式记为
 $$
