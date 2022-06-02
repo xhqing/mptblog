@@ -102,12 +102,10 @@ f\left(\boldsymbol x_i|\boldsymbol x_i\in T_m\right) = w_m \tag{14}
 $$
 也就是说回归树的hypothesis function为
 $$
-\begin{equation}
-\begin{split}
-f(\vec x_i) &= \sum_{m=1}^{M}f(\vec x_i|\vec x_i\in T_m)I(\vec x_i\in T_m) \\
-            &= \sum_{m=1}^{M}w_mI(\vec x_i\in T_m) 
-\end{split}
-\end{equation} \tag{15}
+\begin{aligned}
+f(\boldsymbol x_i) &= \sum_{m=1}^{M}f(\boldsymbol x_i | \boldsymbol x_i \in T_m)I(\boldsymbol x_i\in T_m) \\
+            &= \sum_{m=1}^{M}w_mI(\boldsymbol x_i\in T_m) 
+\end{aligned} \tag{15}
 $$
 其中
 $$
