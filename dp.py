@@ -11,7 +11,7 @@ def gen_readme():
             post_mdfiles.remove(string)
 
     with open("docs/README.md", "w") as f:
-        f.write("# It's My Personal Technical Blog (mptblog)\n")
+        f.write("# It's My Personal Technical Blog\n")
         f.write(" - Repo Address: https://github.com/xhqing/mptblog\n")
         f.write(" - 目录\n")
         for mdf in post_mdfiles:

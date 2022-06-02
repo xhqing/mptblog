@@ -1,4 +1,4 @@
-# It's My Personal Technical Blog (mptblog)
+# It's My Personal Technical Blog
  - Repo Address: https://github.com/xhqing/mptblog
  - 目录
    - [删除Mac自带ABC输入法的步骤](post/删除Mac自带ABC输入法的步骤.md)
