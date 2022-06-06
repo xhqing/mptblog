@@ -109,22 +109,22 @@ f(\boldsymbol x_i) &= \sum_{m=1}^{M}f(\boldsymbol x_i | \boldsymbol x_i \in T_m)
 $$
 其中
 $$
-I(\vec x_i) =
+I(\boldsymbol x_i) =
   \begin{cases}
-    1       & \vec x_i\in T_m \\
-    0       & \vec x_i\notin T_m
+    1       & \boldsymbol x_i\in T_m \\
+    0       & \boldsymbol x_i\notin T_m
   \end{cases} \tag{16}
 $$
 根据$(13)$式最小化Squared Loss
 $$
-\begin{equation}
-\begin{split}
-arg\min \sum_{i=1}^{N}L_{squared}(y_i,f(\vec x_i)) &= arg\min\sum_{i=1}^{N}(y_i-f(\vec x_i))^2 \\
-                             &= arg\min\sum_{i=1}^{N}(y_i-\sum_{m=1}^{M}w_mI(\vec x_i\in T_m))^2 \\
-                             &= arg\min\sum_{m=1}^{M}\sum_{\vec x_i\in T_m}(y_i-w_m)^2
-\end{split} 
-\end{equation} \tag{17}
+\begin{aligned}
+\arg \min \sum_{i=1}^{N}L_{squared}\left(y_i,f\left(\boldsymbol x_i\right)\right) &= \arg\min\sum_{i=1}^{N}\left(y_i-f\left(\boldsymbol x_i\right)\right)^2 \\
+                             &= \arg\min\sum_{i=1}^{N}\left(y_i-\sum_{m=1}^{M}w_mI\left(\boldsymbol x_i\in T_m\right)\right)^2 \\
+                             &= \arg\min\sum_{m=1}^{M}\sum_{\boldsymbol x_i\in T_m}\left(y_i-w_m\right)^2
+\end{aligned} 
+\tag{17}
 $$
+
 
 $$
 \begin{equation}
