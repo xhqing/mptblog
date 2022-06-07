@@ -120,6 +120,7 @@ $$
 \begin{aligned}
 \arg \min \sum_{i=1}^{N}L_{squared}\left(y_i,f\left(\boldsymbol x_i\right)\right) &= \arg\min\sum_{i=1}^{N}\left(y_i-f\left(\boldsymbol x_i\right)\right)^2 \\
                              &= \arg\min\sum_{i=1}^{N}\left(y_i-\sum_{m=1}^{M}w_mI\left(\boldsymbol x_i\in T_m\right)\right)^2 \\
+                             
                              &= \arg\min\sum_{m=1}^{M}\sum_{\boldsymbol x_i\in T_m}\left(y_i-w_m\right)^2
 \end{aligned} 
 \tag{17}
@@ -127,20 +128,20 @@ $$
 
 
 $$
-\begin{equation}
-\begin{split}
-\frac{\partial}{\partial w_m}\sum_{i=1}^{N}L_{squared}(y_i,f(\vec x_i)) &= \sum_{m=1}^{M}\frac{\partial}{\partial w_m}\sum_{\vec x_i\in T_m}(y_i-w_m)^2 \\
-&= -2\sum_{\vec x_i\in T_m}(y_i-w_m) \\
-\end{split}
-\end{equation} \tag{18}
+\begin{aligned}
+\frac{\partial}{\partial w_m}\sum_{i=1}^{N}L_{squared}\left(y_i,f\left(\boldsymbol x_i\right)\right) &= \frac{\partial}{\partial w_m}\sum_{m=1}^{M}\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right)^2 \\
+&= \frac{\partial}{\partial w_m}\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right)^2\\
+&= \sum_{\boldsymbol x_i\in T_m}\frac{\partial}{\partial w_m}\left(y_i - w_m\right)^2\\
+&= -2\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right) \\
+\end{aligned} \tag{18}
 $$
 
 令$(18)$式等于$0$，有
 $$
 \begin{eqnarray*}
--2\sum_{\vec x_i\in T_m}(y_i-w_m)=0 \tag{19} \\ 
-\Rightarrow\sum_{\vec x_i\in T_m}w_m = \sum_{\vec x_i\in T_m}y_i \tag{20} \\
-\Rightarrow w_m=ave(y_i|\vec x_i\in T_m) \tag{21} 
+-2\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right) = 0 \tag{19} \\ 
+\Rightarrow \sum_{\boldsymbol x_i\in T_m}w_m = \sum_{\boldsymbol x_i\in T_m}y_i \tag{20} \\
+\Rightarrow w_m = ave(y_i|\boldsymbol x_i\in T_m) \tag{21} 
 \end{eqnarray*}
 $$
 由$(21)$式知道在Squared Loss下每个$T_m$内部的最优估计值就是$T_m$内部所有样本对应$y_i$的平均值。那么每一次分裂要如何选择最优分裂节点并一步步迭代呢？
