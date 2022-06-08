@@ -138,39 +138,43 @@ $$
 
 令$(18)$式等于$0$，有
 $$
-\begin{eqnarray*}
--2\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right) = 0 \tag{19} \\ 
-\Rightarrow \sum_{\boldsymbol x_i\in T_m}w_m = \sum_{\boldsymbol x_i\in T_m}y_i \tag{20} \\
-\Rightarrow w_m = ave(y_i|\boldsymbol x_i\in T_m) \tag{21} 
-\end{eqnarray*}
+-2\sum_{\boldsymbol x_i\in T_m}\left(y_i - w_m\right) = 0 \\ 
+\Rightarrow \sum_{\boldsymbol x_i\in T_m}w_m = \sum_{\boldsymbol x_i\in T_m}y_i \\
+\Rightarrow w_m = \frac{1}{N_{T_m}}\sum_{\boldsymbol x_i\in T_m}y_i \tag{19}
 $$
-由$(21)$式知道在Squared Loss下每个$T_m$内部的最优估计值就是$T_m$内部所有样本对应$y_i$的平均值。那么每一次分裂要如何选择最优分裂节点并一步步迭代呢？
+其中，$N_{T_m}$为$T_m$里样本的个数。
 
-我们已经知道每一次分裂相当于把表格一分为二，并且已经知道了在Squared Loss下分裂之后每个子表格对应的估计值取子表格内部所有样本对应的target值的平均值就可以使得子表格内部的Squared Loss最小，也就是说只要每次分裂后的两个子表格的最小Squared Loss值相加最小即可，采用的方法就是遍历每个特征及其每一个取值，尝试把每一个特征下的具体的值作为分裂节点，分裂成两个子表格后计算两个子表格的最小Squared Loss的和，如果这个和在遍历了所有可能的分裂节点后是最小的，那么这一次分裂就选当前的分裂节点。
+由$(19)$式知道在Squared Loss下每个$T_m$内部的最优估计值就是$T_m$内部所有样本对应$y_i$的平均值。那么每一次分裂要如何选择最优分裂节点并一步步迭代呢？
+
+我们已经知道每一次分裂相当于把表格一分为二，并且已经知道了在Squared Loss下分裂之后每个子表格对应的估计值取子表格内部所有样本对应的target值的平均值就可以使得子表格内部的Squared Loss最小，那么是否要分裂取决于分裂后的两个子表格的最小Squared Loss值的和是否小于分裂前的一个表格的Squared Loss，小于则分裂，否则停止分裂；但是是否要分裂取决于分裂节点，寻找分裂节点采用的方法是遍历每个特征及其每一个取值，尝试把每一个特征下的具体的值作为分裂节点，分裂成两个子表格后计算两个子表格的最小Squared Loss的和，如果这个和在遍历了所有可能的分裂节点后是最小的且小于分裂前的Squared Loss，那么这一次分裂就选当前的分裂节点。
 
 具体地，假设$x^{(j)}$是第$j$个特征，$s$是特征$x^{(j)}$的某个取值，把$x^{(j)}$和$s$分别作为切分变量和切分点，则可以把当前表格切分成如下两个表格：
 $$
-T_1(j,s)=\{x|x^{(j)}\leq s\} \tag{22}
+T_1\left(j,s\right)=\{x|x^{\left(j\right)}\leq s\} \tag{20}
 $$
 和
 $$
-T_2(j,s) = \{x|x^{(j)}> s\} \tag{23}
+T_2\left(j,s\right) = \{x|x^{\left(j\right)}> s\} \tag{21}
 $$
 计算下式寻找最优切分变量$x^{(j)}$和最优切分点$s$，
 $$
-\min_{j,s}\left[\min_{w_1}\sum_{\vec x_i\in T_1}(y_i-w_1)^2+\min_{w_2}\sum_{\vec x_i\in T_2}(y_i-w_2)^2\right] \tag{24}
+\min_{j,s}\left[\min_{w_1}\sum_{\boldsymbol x_i\in T_1}\left(y_i - w_1\right)^2+\min_{w_2}\sum_{\boldsymbol x_i\in T_2}\left(y_i-w_2\right)^2\right] \tag{22}
 $$
-由$(21)$式可以知道$w_1=ave(y_i|\vec x_i\in T_1)$和$w_2=ave(y_i|\vec x_i\in T_2)$时可以使得$(24)$式在当前分裂点最小，也就是说只要遍历所有可能的分裂点$(j,s)$，找到全局最小的$(j,s)$即可。后续每一次表格的一分为二都采取同样的方法，直到满足停止条件。采用Squared Loss的回归树也叫最小二乘回归树。
+由$(19)$式可以知道$w_1=\frac{1}{N_{T_1}}\sum_{\boldsymbol x_i\in T_1}y_i$和$w_2=\frac{1}{N_{T_2}}\sum_{\boldsymbol x_i\in T_2}y_i$时可以使得$(22)$式在当前分裂点最小，也就是说只要遍历所有可能的分裂点$(j,s)$，找到全局最小的$(j,s)$即可。后续每一次表格的一分为二都采取同样的方法，直到满足停止条件。By the way，采用Squared Loss的回归树也叫最小二乘回归树。
 
 ### 采用Logistic Loss的回归树二分类
 
 由$(7)(8)$式已经知道了Logistic Loss由Logistic function和Binary Entropy Loss推导而来，而Logistic function也叫Sigmoid function，所以Logistic Loss也叫Sigmoid Binary Entropy Loss，它可以把回归模型用于二分类任务。
 
-Logistic Loss最常用的形式是$(9)$式的label $y\in \{0,1\}$的形式，如果label $y\in \{-1,1\}$，则其形态为
+Logistic Loss最常用的形式是$(9)$式的label $y\in \{0,1\}$的形式：
 $$
-L(y_i,h(\vec x_i)) = log(1+e^{-y_ih(\vec x_i)}) \tag{25}
+L\left(y_i, h\left(\boldsymbol x_i\right)\right) = y_i\log_2\left(1+e^{-h\left(\boldsymbol x_i\right)}\right) + \left(1-y_i\right)\log_2\left(1+e^{h\left(\boldsymbol x_i\right)}\right) \tag{23}
 $$
-在$(15)$式中已经知道了回归树的hypothesis function，这里尝试采用Logistic Loss作为loss function来推导其训练过程(这里纯属个人推导理解，真实的各种GBDT源码中的回归树不一定是这么实现的)。以下推导Logistic Loss采用$(9)$式的形态，所以取label $y\in\{0,1\}$。那么训练分类器也就是如下的优化问题
+如果label $y\in \{-1,1\}$，则其形态为
+$$
+L\left(y_i,h\left(\boldsymbol x_i\right)\right) = \log_2\left(1+e^{-y_ih\left(\boldsymbol x_i\right)}\right) \tag{24}
+$$
+在$(15)$式中已经知道了回归树的hypothesis function，这里尝试采用Logistic Loss作为loss function来推导其训练过程。以下推导Logistic Loss采用$(9)$式的形态，所以取label $y\in\{0,1\}$。那么训练分类器也就是如下的优化问题
 $$
 \begin{equation}
 \begin{split}
