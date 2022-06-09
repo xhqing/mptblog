@@ -195,8 +195,8 @@ $$
 令(26)式等于0，即
 $$
 \sum_{\boldsymbol x_i\in T_m}(\frac{1}{1+e^{-w_m}}-y_i)=0 \\ 
-\Rightarrow\sum_{\vec x_i\in T_m}\frac{1}{1+e^{-w_m}} = \sum_{\vec x_i\in T_m}y_i \\
-\Rightarrow \frac{1}{1+e^{-w_m}}=ave(y_i|\vec x_i\in T_m) \\
-\Rightarrow w_m=-log(\frac{1}{ave(y_i|\vec x_i \in T_m)}-1) \tag{27}
+\Rightarrow\sum_{\boldsymbol x_i\in T_m}\frac{1}{1+e^{-w_m}} = \sum_{\boldsymbol x_i\in T_m}y_i \\
+\Rightarrow \frac{1}{1+e^{-w_m}}=\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i\in T_m}y_i \\
+\Rightarrow w_m=-\ln\left(\frac{1}{\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i\in T_m}y_i}-1\right) \tag{27}
 $$
-那么分裂思想也就可以与前述的最小二乘回归树一样，只不过Loss采用Logistic loss，$w_m$采用(31)式的计算值。实际上由(30)式已经可以看出回归树的每个叶节点的权值都输入Logistic function所构成的级联模型在损失为二进制交叉熵下的模型输出值就是$T_m$里面$y_i$的均值。
+那么分裂思想也就可以与前述的最小二乘回归树一样，只不过Loss采用Logistic loss，$w_m$采用(27)式的计算值。实际上由(30)式已经可以看出回归树的每个叶节点的权值都输入Logistic function所构成的级联模型在损失为二进制交叉熵下的模型输出值就是$T_m$里面$y_i$的均值。
