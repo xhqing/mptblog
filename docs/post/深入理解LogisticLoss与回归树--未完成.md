@@ -176,31 +176,27 @@ L\left(y_i,h\left(\boldsymbol x_i\right)\right) = \log_2\left(1+e^{-y_ih\left(\b
 $$
 在$(15)$式中已经知道了回归树的hypothesis function，这里尝试采用Logistic Loss作为loss function来推导其训练过程。以下推导Logistic Loss采用$(9)$式的形态，所以取label $y\in\{0,1\}$。那么训练分类器也就是如下的优化问题
 $$
-\begin{equation}
-\begin{split}
-arg\min_{w_m}\sum_{i=1}^{N}L_{logistic}(y_i,f(\vec x_i)) &= arg\min_{w_m}\sum_{i=1}^{N}\left[y_ilog(1+e^{-f(\vec x_i)}) + (1-y_i)log(1+e^{f(\vec x_i)})\right] \\
-\end{split}
-\end{equation} \tag{26}
+\begin{aligned}
+\arg\min_{w_m}\sum_{i=1}^{N}L_{logistic}\left(y_i,f\left(\boldsymbol x_i\right)\right) &= \arg\min_{w_m}\sum_{i=1}^{N}\left[y_i\log_2\left(1+e^{-f\left(\boldsymbol x_i\right)}\right) + \left(1-y_i\right)\log_2\left(1+e^{f\left(\boldsymbol x_i\right)}\right)\right] \\
+\end{aligned}
+\tag{25}
 $$
 
 $$
-\begin{equation}
-\begin{split}
-\frac{\partial}{\partial w_m}\sum_{i=1}^{N}L_{logistic}(y_i,f(\vec x_i)) &= \frac{\partial}{\partial w_m}\sum_{m=1}^{M}\sum_{\vec x_i\in T_m}\left[y_ilog(1+e^{-w_m})+(1-y_i)log(1+e^{w_m})\right] \\
-&=\sum_{\vec x_i\in T_m}\left[y_i\frac{-e^{-w_m}}{1+e^{-w_m}}+(1-y_i)\frac{e^{w_m}}{1+e^{w_m}}\right] \\
-&=\sum_{\vec x\in T_m}\left[y_i\frac{-e^{-w_m}}{1+e^{-w_m}}+(1-y_i)\frac{1}{1+e^{-w_m}}\right] \\
-&=\sum_{\vec x \in T_m}\left[\frac{1}{1+e^{-w_m}}-y_i\right] \\              
-\end{split}
-\end{equation} \tag{27}
+\begin{aligned}
+\frac{\partial}{\partial w_m}\sum_{i=1}^{N}L_{logistic}\left(y_i,f\left(\boldsymbol x_i\right)\right) &= \frac{\partial}{\partial w_m}\sum_{m=1}^{M}\sum_{\boldsymbol x_i\in T_m}\left[y_i\log_2\left(1+e^{-w_m}\right)+\left(1-y_i\right)\log_2\left(1+e^{w_m}\right)\right] \\
+&=\sum_{\boldsymbol x_i\in T_m}\left[y_i\frac{-e^{-w_m}}{1+e^{-w_m}}+\left(1-y_i\right)\frac{e^{w_m}}{1+e^{w_m}}\right] \\
+&=\sum_{\boldsymbol x_i\in T_m}\left[y_i\frac{-e^{-w_m}}{1+e^{-w_m}}+\left(1-y_i\right)\frac{1}{1+e^{-w_m}}\right] \\
+&=\sum_{\boldsymbol x_i \in T_m}\left[\frac{1}{1+e^{-w_m}}-y_i\right] \\              
+\end{aligned}
+\tag{26}
 $$
 
-令(27)式等于0，则
+令(26)式等于0，即
 $$
-\begin{eqnarray*}
-\sum_{\vec x_i\in T_m}(\frac{1}{1+e^{-w_m}}-y_i)=0 \tag{28} \\ 
-\Rightarrow\sum_{\vec x_i\in T_m}\frac{1}{1+e^{-w_m}} = \sum_{\vec x_i\in T_m}y_i \tag{29} \\
-\Rightarrow \frac{1}{1+e^{-w_m}}=ave(y_i|\vec x_i\in T_m) \tag{30} \\
-\Rightarrow w_m=-log(\frac{1}{ave(y_i|\vec x_i \in T_m)}-1) \tag{31}
-\end{eqnarray*}
+\sum_{\boldsymbol x_i\in T_m}(\frac{1}{1+e^{-w_m}}-y_i)=0 \\ 
+\Rightarrow\sum_{\vec x_i\in T_m}\frac{1}{1+e^{-w_m}} = \sum_{\vec x_i\in T_m}y_i \\
+\Rightarrow \frac{1}{1+e^{-w_m}}=ave(y_i|\vec x_i\in T_m) \\
+\Rightarrow w_m=-log(\frac{1}{ave(y_i|\vec x_i \in T_m)}-1) \tag{27}
 $$
 那么分裂思想也就可以与前述的最小二乘回归树一样，只不过Loss采用Logistic loss，$w_m$采用(31)式的计算值。实际上由(30)式已经可以看出回归树的每个叶节点的权值都输入Logistic function所构成的级联模型在损失为二进制交叉熵下的模型输出值就是$T_m$里面$y_i$的均值。
