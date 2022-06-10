@@ -1,4 +1,4 @@
-创建于 2022-05-19
+创建于 2022-05-19<br>
 关键词: 机器学习, 数据挖掘, logistic函数, 逻辑回归, 回归树
 
 ## Logistic Function与Logistic Regression
@@ -199,6 +199,6 @@ $$
 \Rightarrow \frac{1}{1+e^{-w_m}}=\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i\in T_m}y_i \\
 \Rightarrow w_m=-\ln\left(\frac{1}{\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i\in T_m}y_i}-1\right) \tag{27}
 $$
-其中$0<\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i \in T_m}y_i<1$，
+其中$0<\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i \in T_m}y_i<1$；如果$\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i \in T_m}y_i=0$，则(26)式恒大于$0$，Logistic loss在$w_m\to-\infty$时取到最小；如果$\frac{1}{N_{T_m}}\sum_{\boldsymbol x_i \in T_m}y_i=1$，则(26)式恒小于$0$，Logistic loss在$w_m\to+\infty$时取到最小。
 
-那么分裂思想也就可以与前述的最小二乘回归树一样，只不过Loss采用Logistic loss，$w_m$采用(27)式的计算值。实际上由(27)式已经可以看出回归树的每个叶节点的输出值都输入Logistic Function所构成的级联模型在损失为二进制交叉熵下的模型输出值就是$T_m$里面$y_i$的均值。
+那么分裂思想也就可以与前述的最小二乘回归树一样，只不过Loss采用Logistic loss，$w_m$采用(27)式的计算值或为正负无穷大的特殊情况。实际上由(27)式已经可以看出回归树的每个叶节点的输出值都输入Logistic Function所构成的级联模型在损失为二进制交叉熵下的模型输出值就是$T_m$里面$y_i$的均值。
