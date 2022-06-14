@@ -7,6 +7,9 @@ class TitleError(Exception):
 class TitleDuplicated(Exception):
     """Title Duplicated"""
 
+class LengthError(Exception):
+    """length too long error"""
+
 def is_cn(strs):
     for _char in strs:
         if not '\u4e00' <= _char <= '\u9fa5':
@@ -45,6 +48,10 @@ if __name__ == "__main__":
     cpost_dir = os.listdir("./post")
     if f"{post_title}.md" in cpost_dir or f"{post_title}--未完成.md" in cpost_dir:
         raise TitleDuplicated(f"""\033[01;31;01m {post_title}.md or {post_title}-未完成.md has already exist in ./post, please choose another one. \033[01;31;01m""")
+
+    if len(post_title) > 20:
+        msg = "title length is more than 20 chars!"
+        raise LengthError(msg)
 
     os.system(f"touch post/{post_title}--未完成.md")
     
