@@ -16,6 +16,12 @@ def is_cn(strs):
             return False
     return True
 
+def post_title_stdlen(post_title: str) -> int:
+
+    cn_len = sum(list(map(lambda x: 1 if '\u4e00' <= x <= '\u9fa5' else 0, post_title)))
+    return len(post_title) - cn_len + 2*cn_len
+
+
 def is_en(strs):
     up = "QWERTYUIOPASDFGHJKLZXCVBNM"
     lo = "qwertyuiopasdfghjklzxcvbnm"
@@ -49,8 +55,8 @@ if __name__ == "__main__":
     if f"{post_title}.md" in cpost_dir or f"{post_title}--未完成.md" in cpost_dir:
         raise TitleDuplicated(f"""\033[01;31;01m {post_title}.md or {post_title}-未完成.md has already exist in ./post, please choose another one. \033[01;31;01m""")
 
-    if len(post_title) > 20:
-        msg = "title length is more than 20 chars!"
+    if post_title_stdlen(post_title) > 28:
+        msg = "title length is more than 28 chars! Note: a cn char len eq to double en char len."
         raise LengthError(msg)
 
     os.system(f"touch post/{post_title}--未完成.md")
