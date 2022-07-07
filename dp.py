@@ -4,6 +4,14 @@ import shutil
 class TitleError(Exception):
     """TitleError class"""
 
+class LengthError(Exception):
+    """length too long error"""
+
+def post_title_stdlen(post_title: str) -> int:
+
+    cn_len = sum(list(map(lambda x: 1 if '\u4e00' <= x <= '\u9fa5' else 0, post_title)))
+    return len(post_title) - cn_len + 2*cn_len
+
 def gen_readme():
     post_mdfiles = os.listdir("docs/post")
     for string in post_mdfiles:
@@ -76,6 +84,13 @@ if __name__ == "__main__":
         for line in text:
             if line[:2] == "# ":
                 raise TitleError(f"""\033[01;31;01m {mdf} {line} Please use 2 '#', {'#'+line}\033[01;31;01m""")
+
+    post_titles = list(map(lambda x: x.replace("--未完成.md","") if "--未完成" in x else x.replace(".md",""), post_mdfiles))
+    for tit in post_titles:
+        if post_title_stdlen(tit) > 28: 
+            msg = f"`{tit}` title length is more than 28 chars! Note: a cn char len eq to double en char len."
+            raise LengthError(msg)
+
 
     docs_sub = os.listdir("./docs")
     if "post" in docs_sub:

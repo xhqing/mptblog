@@ -5,7 +5,6 @@
    - [深入理解感知器算法--未完成](post/深入理解感知器算法--未完成.md)
    - [删除Mac自带ABC输入法](post/删除Mac自带ABC输入法.md)
    - [伯努利分布与逻辑回归--未完成](post/伯努利分布与逻辑回归--未完成.md)
-   - [深入理解伯努利分布--未完成](post/深入理解伯努利分布--未完成.md)
    - [什么是AutoML和AutoDL--未完成](post/什么是AutoML和AutoDL--未完成.md)
    - [深入理解CatBoost--未完成](post/深入理解CatBoost--未完成.md)
    - [深入理解GBDT算法--未完成](post/深入理解GBDT算法--未完成.md)
@@ -26,4 +25,5 @@
    - [深入理解梯度下降算法--未完成](post/深入理解梯度下降算法--未完成.md)
    - [什么是联邦学习--未完成](post/什么是联邦学习--未完成.md)
    - [深入理解长短期记忆网络LSTM--未完成](post/深入理解长短期记忆网络LSTM--未完成.md)
+   - [深入理解伯努利分布和二项分布--未完成](post/深入理解伯努利分布和二项分布--未完成.md)
    - [XGBoost与SecureBoost--未完成](post/XGBoost与SecureBoost--未完成.md)

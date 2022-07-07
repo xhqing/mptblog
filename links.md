@@ -85,3 +85,9 @@ https://mp.weixin.qq.com/s/zejkifZnYXAfgTRrkMaEww
 
 22、GBDT算法原理深入解析
 https://www.zybuluo.com/yxd/note/611571
+
+
+
+https://chocolatey.org/
+
+https://zhuanlan.zhihu.com/p/51843147
